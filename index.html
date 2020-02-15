@@ -49,13 +49,32 @@
                         <tbody>
                             <tr v-for="id in data" >
                                 <td>{{ id.minggu }}</td>
-                                <td><input style="width: 100px;margin:auto;" type="text" class="form-control" v-model="id.frekuensi"></td>
+                                <td><input style="width: 100px;margin:auto;" type="text" class="form-control" v-model="id.frekuensi" @change="updateData(id)"></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
+                <div style="margin-bottom:50px;margin-top: 50px;">
+                    <label for="exampleInputEmail1">Data Input Faktual</label>
+                    <table class="table table-bordered text-center">
+                        <thead>
+                            <th>Minggu Ke</th>
+                            <th>Permintaan</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input style="width: 100px;margin:auto;" type="text" class="form-control" v-model="mingguIn"></td>
+                                <td><input style="width: 100px;margin:auto;" type="text" class="form-control" v-model="freqIn"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="input-group-prepend">
+                        <button class="btn btn-outline-primary" type="button" id="button-addon1" @click="input">Input Data</button>
+                    </div>
+                </div>
                 <!-- <div class="form-group">
-                    <label for="exampleInputEmail1">Data Length</label>
+                    <label for="exampleInputEmail1">Data Input Faktual</label>
+                    <input type="text" v-model="len" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                     <input type="text" v-model="len" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                 </div> -->
                 <table class="table table-bordered text-center">
@@ -138,7 +157,9 @@
                     frekuensi : [],
                     datTable:[],
                     temp:[],
-                    counterA:0
+                    counterA:0,
+                    mingguIn:0,
+                    freqIn:0
                 },
                 
                 mounted () {
@@ -149,6 +170,7 @@
                 },
                 methods:{
                     checking : function(){
+                        this.datTable = []
                         for(i=0;i<=Math.max.apply(Math,this.data.map(o => o.frekuensi));i++){
                             if (this.data.filter(x => x.frekuensi == i).length > 0){
                                 this.datTable.push({
@@ -235,6 +257,14 @@
                         this.gNumber = parseFloat(Math.random()).toFixed(3)
                         this.classify()
                         this.generateChart()
+                    },
+                    input : function(){
+                        console.log(this.freqIn+" + "+this.mingguIn)
+                    },
+                    updateData(id){
+                        console.log(id.frekuensi)
+                        console.log(id.minggu)
+                        this.checking();
                     },
                     classify : function(){
                         if(this.res.length > 0){
