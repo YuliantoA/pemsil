@@ -260,10 +260,26 @@
                     },
                     input : function(){
                         console.log(this.freqIn+" + "+this.mingguIn)
+                        axios
+                        .post('http://ahromi.my.id/pemsil_montecarlo/api/pemsil',{
+                            minggu:this.mingguIn,
+                            frekuensi:this.freqIn
+                        })
+                        .then(response => (console.log(response)))
+                        .catch(error => console.log(error))
                     },
                     updateData(id){
+                        console.log(id.id)
                         console.log(id.frekuensi)
                         console.log(id.minggu)
+                        axios
+                        .put('http://ahromi.my.id/pemsil_montecarlo/api/pemsil',{
+                            id:id.id,
+                            minggu:id.minggu,
+                            frekuensi:id.freq
+                        })
+                        .then(response => (console.log(response)))
+                        .catch(error => console.log(error))
                         this.checking();
                     },
                     classify : function(){
